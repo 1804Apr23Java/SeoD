@@ -14,7 +14,8 @@ public class Producer extends Thread implements Runnable {
 	@Override
 	public void run() {
 		Random rand = new Random();
-		int y = rand.nextInt(5); //Puts random amount into basket
+		//int y = rand.nextInt(5); //Puts random amount into basket
+		int y = 1;
 		if (basket.size() == 0)  
 		{
 			for (int i = 0; i < y; i++)
@@ -40,7 +41,6 @@ public class Producer extends Thread implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		
 	}
 
 
