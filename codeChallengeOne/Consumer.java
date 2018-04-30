@@ -36,6 +36,8 @@ public class Consumer extends Thread implements Runnable {
 				}
 			}
 		}
+		//add wait
+		//Thread.wait();
 		
 	}
 

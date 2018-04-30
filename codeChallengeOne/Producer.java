@@ -23,13 +23,21 @@ public class Producer extends Thread implements Runnable {
 				Items item = new Items(x);
 				//System.out.println("Produced Item #: " + item.getNumber());
 				try {
-					Thread.sleep(i);
 					basket.put(item);
 					System.out.println("Added Item  #" + item.getNumber());
 
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+			}
+			
+		}
+		else
+		{
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 		
