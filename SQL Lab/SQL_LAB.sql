@@ -32,7 +32,6 @@ VALUES (27, 'Anything Goes');
 
 -- Insert two new records into Employee table
 -- Possible Null Values: Postco
-SELECT * FROM EMPLOYEE;
 INSERT INTO EMPLOYEE 
 VALUES (19, 'Jesse', 'Adams', 'CTO', 7, '18-APR-20', '01-DEC-03', '66666 New Waver','San Jose', 'CA', 'USA', 'TPP 8x9', '+1 (410) 444-5555', '+1 (777) 777-7777', 'jesse.adams@whereami.com');
 
@@ -74,7 +73,7 @@ SELECT * FROM EMPLOYEE; -- Still fixing
 
 -- Delete a record in Customer table where the name is Robert Walter (There may be constraints that rely on this, find out how to resolve them).
 DELETE FROM CUSTOMER
-WHERE FIRSTNAME = 'Robert' AND LASTNAME = 'Walter';
+WHERE FIRSTNAME = 'Robert' AND LASTNAME = 'Walter'; --Still Working on it
 
 -- Create a function that returns the current time.
 -- Create a function that returns the length of name in MEDIATYPE table
