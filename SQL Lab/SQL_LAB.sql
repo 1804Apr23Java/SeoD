@@ -32,6 +32,7 @@ VALUES (27, 'Anything Goes');
 
 -- Insert two new records into Employee table
 -- Possible Null Values: Postco
+SELECT * FROM EMPLOYEE;
 INSERT INTO EMPLOYEE 
 VALUES (19, 'Jesse', 'Adams', 'CTO', 7, '18-APR-20', '01-DEC-03', '66666 New Waver','San Jose', 'CA', 'USA', 'TPP 8x9', '+1 (410) 444-5555', '+1 (777) 777-7777', 'jesse.adams@whereami.com');
 
@@ -69,11 +70,23 @@ SELECT * FROM INVOICE
 WHERE TOTAL BETWEEN 15 AND 50;
 
 -- Select all employees hired between 1st of June 2003 and 1st of March 2004
-SELECT * FROM EMPLOYEE; -- Still fixing
+SELECT * FROM EMPLOYEE
+WHERE HIREDATE BETWEEN '01-JUN-03' AND '01-MAR-04';
 
 -- Delete a record in Customer table where the name is Robert Walter (There may be constraints that rely on this, find out how to resolve them).
+DELETE FROM INVOICELINE
+WHERE INVOICEID IN ( SELECT INVOICEID FROM INVOICE
+                     WHERE CUSTOMERID IN ( SELECT CUSTOMERID FROM CUSTOMER
+                                           WHERE FIRSTNAME = 'Robert' AND LASTNAME = 'Walter'));
+
+DELETE FROM INVOICE
+WHERE CUSTOMERID IN ( SELECT CUSTOMERID FROM CUSTOMER
+                      WHERE FIRSTNAME = 'Robert' AND LASTNAME = 'Walter');
+                    
+
 DELETE FROM CUSTOMER
-WHERE FIRSTNAME = 'Robert' AND LASTNAME = 'Walter'; --Still Working on it
+WHERE FIRSTNAME = 'Robert' AND LASTNAME = 'Walter';
+
 
 -- Create a function that returns the current time.
 -- Create a function that returns the length of name in MEDIATYPE table
