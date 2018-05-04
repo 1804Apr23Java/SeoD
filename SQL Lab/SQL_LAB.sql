@@ -13,7 +13,7 @@ WHERE FIRSTNAME = 'Andrew' AND REPORTSTO IS NULL;
 
 
 -- Select all albums in Album table and sort result set in descending order by title.
-SELECT * FROM ALBUM
+SELECT TITLE FROM ALBUM
 ORDER BY TITLE DESC;
 
 
@@ -32,12 +32,11 @@ VALUES (27, 'Anything Goes');
 
 -- Insert two new records into Employee table
 -- Possible Null Values: Postco
-SELECT * FROM EMPLOYEE;
 INSERT INTO EMPLOYEE 
 VALUES (19, 'Jesse', 'Adams', 'CTO', 7, '18-APR-20', '01-DEC-03', '66666 New Waver','San Jose', 'CA', 'USA', 'TPP 8x9', '+1 (410) 444-5555', '+1 (777) 777-7777', 'jesse.adams@whereami.com');
 
 INSERT INTO EMPLOYEE (EMPLOYEEID, LASTNAME, FIRSTNAME, TITLE, BIRTHDATE, HIREDATE, ADDRESS, CITY, STATE, COUNTRY, PHONE, FAX, EMAIL)
-VALUES(20, 'Owens', 'Gale', 'CPO', '19-apr-21', '02-DEC-03', '66667 New Waver','San Jose', 'CA', 'USA', '+1 (410) 444-5556', '+2 (777) 777-7777', 'owens.gales@whereami.com');
+VALUES(20, 'Owens', 'Gale', 'CPO', TO_DATE('19-APR-21 00:00:00', 'dd-mmm-yy hh24:mi:ss'), TO_DATE('02-MAR-18 00:00:00', 'dd-mmm-yy hh24:mi:ss'), '66667 New Waver','San Jose', 'CA', 'USA', '+1 (410) 444-5556', '+2 (777) 777-7777', 'owens.gales@whereami.com');
 
 
 -- Insert two new records into Customer table
@@ -89,17 +88,169 @@ WHERE FIRSTNAME = 'Robert' AND LASTNAME = 'Walter';
 
 
 -- Create a function that returns the current time.
+CREATE OR REPLACE FUNCTION CURRENT_TIME
+RETURN VARCHAR
+IS Z VARCHAR(100);
+BEGIN
+SELECT CURRENT_TIMESTAMP
+INTO Z
+FROM DUAL;
+RETURN Z;
+END;
+
+DECLARE
+A VARCHAR(100);
+BEGIN
+A := CURRENT_TIME();
+DBMS_OUTPUT.PUT_LINE(A);
+END;
+
+
 -- Create a function that returns the length of name in MEDIATYPE table
+CREATE OR REPLACE FUNCTION NAMELENGTH(( S OUT SYS_REFCURSOR))
+RETURN NUMBER
+IS LENGTHOFNAME NUMBER;
+BEGIN
+    OPEN S FOR 
+    SELECT LENGTH(NAME) 
+    INTO LENGTHOFNAME
+    FROM MEDIATYPE;
+    DBMS_OUTPUT.PUT_LINE('NAME LENGTH: ' || LENGTHOFNAME);
+END;
+
+DECLARE
+BEGIN
+    NAMELENGTH();
+END;
 -- Create a function that returns the average total of all invoices 
+CREATE OR REPLACE FUNCTION INVOICE_AVERAGE_TOTAL
+RETURN NUMBER 
+IS AVERAGE NUMBER;
+BEGIN 
+   SELECT AVG(TOTAL) INTO AVERAGE
+   FROM INVOICE;
+   RETURN AVERAGE; 
+   --DBMS_OUTPUT.PUT_LINE('AVERAGE: ' || AVERAGE);
+END; 
+
+DECLARE
+A NUMBER;
+BEGIN
+A := INVOICE_AVERAGE_TOTAL();
+DBMS_OUTPUT.PUT_LINE('Average of Invoice Totals: ' ||A);
+END;
+
+
 -- Create a function that returns the most expensive track
+CREATE OR REPLACE FUNCTION MOST_EXPENSIVE_TRACK
+RETURN VARCHAR
+IS RICH_TRACK VARCHAR(100);
+BEGIN
+    SELECT NAME INTO RICH_TRACK
+    FROM TRACK;
+    WHERE MAX(UNITPRICE)
+    RETURN RICH_TRACK;
+END;
+
+
 -- Create a function that returns the average price of invoiceline items in the invoiceline table
+CREATE OR REPLACE FUNCTION AVERAGE_INVOICELINE_PRICE
+RETURN NUMBER
+IS AVERAGE_PRICE NUMBER;
+BEGIN
+    SELECT AVG(UNITPRICE)INTO AVERAGE_PRICE
+    FROM INVOICELINE;
+    RETURN AVERAGE_PRICE;
+END;
+
+DECLARE
+A NUMBER;
+BEGIN
+A := AVERAGE_INVOICELINE_PRICE();
+DBMS_OUTPUT.PUT_LINE('Average of Invoiceline Items: ' ||A);
+END;
+    
+    
 -- Create a function that returns all employees who are born after 1968.
 -- Create a stored procedure that selects the first and last names of all the employees.
+CREATE OR REPLACE PROCEDURE GETFIRSTANDLASTNAME (S OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN S FOR 
+    SELECT FIRSTNAME, LASTNAME 
+    FROM EMPLOYEE;
+END;
+
+DECLARE
+S SYS_REFCURSOR;
+FIRST_NAME EMPLOYEE.FIRSTNAME%TYPE;
+LAST_NAME EMPLOYEE.LASTNAME%TYPE;
+BEGIN
+    GETFIRSTANDLASTNAME(S);
+    LOOP
+        FETCH S INTO FIRST_NAME, LAST_NAME;
+        EXIT WHEN S%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(FIRST_NAME||' '||LAST_NAME);
+    END LOOP;
+    CLOSE S;
+END;
+
 -- Create a stored procedure that updates the personal information of an employee.
 -- Create a stored procedure that returns the managers of an employee.
+CREATE OR REPLACE PROCEDURE GETMANAGERS (S OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN S FOR 
+    SELECT FIRSTNAME, LASTNAME, TITLE
+    FROM EMPLOYEE
+    WHERE TITLE LIKE '%Manager%';
+END;
+
+DECLARE
+S SYS_REFCURSOR;
+FIRST_NAME EMPLOYEE.FIRSTNAME%TYPE;
+LAST_NAME EMPLOYEE.LASTNAME%TYPE;
+EMPLOYEE_TITLE EMPLOYEE.TITLE%TYPE;
+BEGIN
+    GETMANAGERS(S);
+    LOOP
+        FETCH S INTO FIRST_NAME, LAST_NAME, EMPLOYEE_TITLE;
+        EXIT WHEN S%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(FIRST_NAME||' '||LAST_NAME||' '|| EMPLOYEE_TITLE);
+    END LOOP;
+    CLOSE S;
+END;
 -- Create a stored procedure that returns the name and company of a customer.
+CREATE OR REPLACE PROCEDURE GETCUSTOMERINFO (S OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN S FOR 
+    SELECT FIRSTNAME, LASTNAME, COMPANY
+    FROM CUSTOMER;
+END;
+
+DECLARE
+S SYS_REFCURSOR;
+FIRST_NAME CUSTOMER.FIRSTNAME%TYPE;
+LAST_NAME CUSTOMER.LASTNAME%TYPE;
+CUSTOMER_COMPANY CUSTOMER.COMPANY%TYPE;
+BEGIN
+    GETCUSTOMERINFO(S);
+    LOOP
+        FETCH S INTO FIRST_NAME, LAST_NAME, CUSTOMER_COMPANY;
+        EXIT WHEN S%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(FIRST_NAME||' '||LAST_NAME||'   Customers Company: '|| CUSTOMER_COMPANY);
+    END LOOP;
+    CLOSE S;
+END;
 -- Create a transaction that given a invoiceId will delete that invoice (There may be constraints that rely on this, find out how to resolve them).
 -- Create an after insert trigger on the employee table fired after a new record is inserted into the table.
+CREATE OR REPLACE TRIGGER TR_INSERT_EMPLOYEE
+AFTER INSERT ON EMPLOYEE
+FOR EACH ROW
+BEGIN
+      SELECT SQ_BEAR_FK.NEXTVAL INTO :NEW.BEAR_TYPE_ID FROM DUAL;
+END;
 -- Create an after update trigger on the album table that fires after a row is inserted in the table
 -- Create an after delete trigger on the customer table that fires after a row is deleted from the table
 
