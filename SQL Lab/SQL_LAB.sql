@@ -1,3 +1,4 @@
+--Needs tweaks
 -- 2.1.1 Select all records from the Employee table.
 SELECT * FROM EMPLOYEE;
 
