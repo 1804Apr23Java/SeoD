@@ -29,7 +29,7 @@ BEGIN
 END;
 
 INSERT INTO EMPLOYEE (EMP_FIRSTNAME , EMP_LASTNAME , SALARY, EMP_EMAIL)
-VALUES ('Jason', 'McCob', 30,000, 'jason.mccob@employee.com');
+VALUES ('Jason', 'McCob', 30000, 'jason.mccob@employee.com');
 
 INSERT INTO EMPLOYEE (EMP_FIRSTNAME , EMP_LASTNAME , SALARY, EMP_EMAIL)
 VALUES ('Eric', 'McCob', 60000, 'eric.mccob@employee.com');
