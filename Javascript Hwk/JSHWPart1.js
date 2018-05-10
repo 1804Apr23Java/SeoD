@@ -126,51 +126,45 @@ var y = [];
  Return false if not balanced
 */
 homework.balancedBrackets = function(bracketsString){
-var i;
-var left = 0;
-var right = 0;
-
-      for (i = 0; i < bracketsString.length; i++)
-        {
-          switch(bracketsString.charAt(i))
+  var i;
+  var array = [];
+  
+        for (i = 0; i < bracketsString.length; i++)
           {
-            case "(":
-              if (bracketsString.charAt(bracketsString.length - (i + 1)) === ")")
-                {break;}
-              else
-                {return false;}
-            case "[":
-              if (bracketsString.charAt(bracketsString.length - (i + 1)) === "]")
-                {break;}
-              else
-                {return false;}
-            case "{":
-              if (bracketsString.charAt(bracketsString.length - (i + 1)) === "}")
-                {break;}
-              else
-                {return false;}
-            case ")":
-              if (bracketsString.charAt(bracketsString.length - (i + 1)) === "(")
-                {break;}
-              else
-                {return false;}
-            case "]":
-              if (bracketsString.charAt(bracketsString.length - (i + 1)) === "[")
-                {break;}
-              else
-                {return false;}
-            case "}":
-              if (bracketsString.charAt(bracketsString.length - (i + 1)) === "{")
-                {break;}
-              else
-                {return false;}
-
+            switch(bracketsString.charAt(i))
+            {
+              case "(":
+              case "[":
+              case "{":
+                array.push(bracketsString.charAt(i));
+                break;
+              case ")":
+                if (array.pop() !== "(")
+                  return false;
+                else
+                break;
+              case "]":
+                if (array.pop() !== "[")
+                  return false;
+                else
+                break;
+              case "}":
+                if (array.pop() !== "{")
+                return false;
+                else
+                break;
+  
+  
+            }
           }
-        }
-      return true;
-    
-
-
-};
-
-console.log(homework.balancedBrackets("([)]"));
+        
+          if (array.length === 0)
+            return true;
+          else
+            return false;
+      
+  
+  
+  };
+  
+  //console.log(homework.balancedBrackets("({[]})"));
