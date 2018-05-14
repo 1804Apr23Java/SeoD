@@ -192,7 +192,7 @@ var oldColor = 'the default color';
 for (var i = 0; i < x.length; i++) {
     x[i].addEventListener('change', function() {
         alert('So you like ' + this.value + ' more than ' + oldColor +' now?');
-        //x.style.color = this.value; somehoe need to fix
+        //x.style.color = this.value; somehow need to fix
         oldColor = this.value;
     });
 }
