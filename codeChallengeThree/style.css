@@ -15,8 +15,9 @@ p {
 	color: white;
 }
 h3, .fix{
-	background-color: white;
+	background-color: rgb(202, 202, 202);
 	color:  black;
+	opacity: .7;
 }
 .navbar {
 	border: 3px rgb(141, 141, 202);

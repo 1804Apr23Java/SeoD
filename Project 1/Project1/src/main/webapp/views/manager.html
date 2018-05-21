@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<p> All hail our glorious Manager! </p>
+
+	<div>
+	
+	</div>
+
+	<div class="box">
+		<p id="user"></p>
+	</div>
+	<div id="dynamicEmployeeBody">Reimbursements: </div>
+	<button type="button" onclick="getUsersInfo('managerViewAllEmployee')">Profile</button>
+	<button type="button" onclick="getReimbursementsEmployee(3, 'managerViewAllReimbursements')">Get All Employee Reimbursements</button>
+	<button type="button" onclick="getReimbursementsEmployee(0, 'managerViewAllReimbursements')">Get All Pending Reimbursements</button>
+	<button type="button" onclick="getReimbursementsEmployee(1, 'managerViewAllReimbursements')">Get All Rejected Reimbursements</button>
+	<button type="button" onclick="getReimbursementsEmployee(2, 'managerViewAllReimbursements')">Get All Resolved Reimbursements</button>
+	<p id="managerReimbursements">Hello</p>
+
+	<a href="logout">Logout</a>
+
+	
+</body>
+<script src="scripts/ajax.js"></script>
+<script src="scripts/check.js"></script>
+<script src="scripts/reimbursementRequest.js"></script>
+<script src="scripts/userinfo.js"></script>
+</html>

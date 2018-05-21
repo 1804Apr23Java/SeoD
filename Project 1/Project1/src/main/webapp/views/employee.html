@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Employee Profile</title>
+<link rel="stylesheet" href="styles/Framework.css">
+</head>
+<body>
+
+	<div>
+	
+	</div>
+
+	<div class="box">
+		<p id="user"></p>
+	</div>
+	<div id="dynamicEmployeeBody">Reimbursements: </div>
+	<button type="button" onclick="getUserInfo('employeeInfo')">Profile</button>
+	<button type="button" onclick="getReimbursementsEmployee(3, 'employeeAll')">All Reimbursements</button>
+	<button type="button" onclick="getReimbursementsEmployee(0, 'employeePending')">Pending Reimbursements</button>
+	<button type="button" onclick="getReimbursementsEmployee(1, 'employeeRejected')">Rejected Reimbursements</button>
+	<button type="button" onclick="getReimbursementsEmployee(2, 'employeeResolved')">Resolved Reimbursements</button>
+	<p id="showReimbursements">Hello</p>
+
+	<a href="logout">Logout</a>
+	
+	<form class="box" action="employeeinfo" method="post"> <!--onclick="updateUserInfo('employeeUpdate')"  -->
+		<fieldset>
+			<legend>First Name:</legend>
+			<input name="first_name">
+		</fieldset>
+		<fieldset>
+			<legend>Last Name:</legend>
+			<input name="last_name">
+		</fieldset>
+		<fieldset>
+			<legend>Email:</legend>
+			<input name="new_email">
+		</fieldset>
+		
+		<br>
+		<input type="submit" value="login"> <!--onclick="updateUserInfo('employeeUpdate')"  -->
+	</form>
+
+	
+</body>
+<script src="scripts/ajax.js"></script>
+<script src="scripts/check.js"></script>
+<script src="scripts/reimbursementRequest.js"></script>
+<script src="scripts/userinfo.js"></script>
+</html>
