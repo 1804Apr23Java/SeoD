@@ -24,16 +24,18 @@ public class ReimburseImageIMPL implements ReimburseImageDAO {
 	 */
 
 	@Override
-	public boolean insertNewImage(int reimburse_id, File image_ref) {
-		FileInputStream fileInputStream = null;
+	public boolean insertNewImage(int reimburse_id, InputStream image_ref) {
+		//FileInputStream fileInputStream = null;
 		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
 
 			String sql = "INSERT INTO REIMBURSE_IMAGE (REIMBURSE_ID, PHOTO) VALUES (?, ?)";
-			fileInputStream = new FileInputStream(image_ref);
+			//fileInputStream = new FileInputStream(image_ref);
 
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setInt(1, reimburse_id);
-			statement.setBinaryStream(2, fileInputStream, fileInputStream.available());
+			statement.setBlob(2, image_ref);
+			//statement.setBinaryStream(2, image_ref, image_ref.available());
+			//statement.setBinaryStream(2, fileInputStream, fileInputStream.available());
 			statement.executeUpdate();
 
 			con.close();
@@ -62,11 +64,11 @@ public class ReimburseImageIMPL implements ReimburseImageDAO {
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
-				int imageNum = rs.getInt("REIMBURSE_IMAGE_ID");
-				int reimburse_id = rs.getInt("REIMBURSE_ID");
+				//int imageNum = rs.getInt("REIMBURSE_IMAGE_ID");
+				//int reimburse_id = rs.getInt("REIMBURSE_ID");
 				Blob blob = rs.getBlob("PHOTO");
-				String name = rs.getString("PHOTO_NAME");
-				return new Image(imageNum, reimburse_id, blob, name);
+				//String name = rs.getString("PHOTO_NAME");
+				return new Image(0, image_id, blob, "test");
 
 			}
 			con.close();

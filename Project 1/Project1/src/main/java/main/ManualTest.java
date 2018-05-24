@@ -12,6 +12,7 @@ import dao.ReimburseImageDAO;
 import dao.ReimburseImageIMPL;
 import dao.UserDAO;
 import dao.UserIMPL;
+import domain.Image;
 import domain.Reimburse;
 import domain.User;
 
@@ -71,12 +72,19 @@ public class ManualTest {
 		System.out.println(c);
 		*/
 		
-		/*
+		
 		//File file = new File("jss.PNG");
 		ReimburseImageDAO rid = new ReimburseImageIMPL();
 		//rid.insertNewImage(1, file);
-		rid.getOneImage(1);
-		*/
+		Image rs = rid.getOneImage(23);
+		if (!(rs.getImageFile() == null))
+		{
+			System.out.println("in");
+		}
+		else
+			System.out.println("no");
+		
+		
 		System.out.println("done");
 		
 	}

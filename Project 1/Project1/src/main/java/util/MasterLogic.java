@@ -56,8 +56,10 @@ public class MasterLogic {
 		case "employeeUpdate": {
 			String firstName = request.getParameter("first_name");
 			String lastName = request.getParameter("last_name");
+			String newPassword = request.getParameter("new_password");
 			String email = request.getParameter("new_email");
 			ud.updateUserInfo(username, firstName, lastName, email);
+			ud.changePassword(username, newPassword);
 			break;
 		}
 
@@ -82,27 +84,27 @@ public class MasterLogic {
 		}
 
 		case "managerViewReimbursementsViaUser": {
-			//System.out.println("Name: " + request.getParameter("requestingUser"));
-			String employeeSearch = request.getParameter("requestingUser");		
+			// System.out.println("Name: " + request.getParameter("requestingUser"));
+			String employeeSearch = request.getParameter("requestingUser");
 			List<Reimburse> listReimburse = rd.getReimbursementByUserAccount(employeeSearch);
 			response.setContentType("application/json");
 			ObjectMapper om = new ObjectMapper();
 			String listRString = om.writeValueAsString(listReimburse);
 			response.getWriter().write(listRString);
 			break;
-			
+
 		}
-		
+
 		case "singleReimbursementById": {
-		int reId = Integer.parseInt(request.getParameter("requestingReimburse"));	
-		Reimburse re = rd.getReimburseById(reId);
-		response.setContentType("application/json");
-		ObjectMapper om = new ObjectMapper();
-		String listRString = om.writeValueAsString(re);
-		response.getWriter().write(listRString);
-		break;
+			int reId = Integer.parseInt(request.getParameter("requestingReimburse"));
+			Reimburse re = rd.getReimburseById(reId);
+			response.setContentType("application/json");
+			ObjectMapper om = new ObjectMapper();
+			String listRString = om.writeValueAsString(re);
+			response.getWriter().write(listRString);
+			break;
 		}
-		
+
 		case "Reject": {
 			rd.changePendingState(Integer.parseInt(request.getParameter("requestingReimburse")), username, 1);
 			Reimburse re = rd.getReimburseById(Integer.parseInt(request.getParameter("requestingReimburse")));
@@ -112,8 +114,8 @@ public class MasterLogic {
 			response.getWriter().write(listRString);
 			break;
 		}
-		
-		case "Resolve":{
+
+		case "Resolve": {
 			rd.changePendingState(Integer.parseInt(request.getParameter("requestingReimburse")), username, 2);
 			Reimburse re = rd.getReimburseById(Integer.parseInt(request.getParameter("requestingReimburse")));
 			response.setContentType("application/json");

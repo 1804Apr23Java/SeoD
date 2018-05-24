@@ -218,6 +218,22 @@ function getReimbursementPage(xhr) {
 		section.appendChild(trm);
 		
 		//reinsert insertResolutionBox() here if necessary
+		let form1 = document.createElement("form");
+		form1.setAttribute("action", "uploadfile");
+		form1.setAttribute("method", "post");
+		form1.setAttribute("enctype", "multipart/form-data");
+		let i3 = document.createElement("input");
+		i3.setAttribute("type", "file");
+		i3.setAttribute("name", "photo");
+		i3.setAttribute("size", "50");
+		let i4 = document.createElement("input");
+		i4.setAttribute("type", "submit");
+		i4.setAttribute("submit", "Save");
+		//i4.setAttribute("name", "reimbrusephoto");
+		
+		document.getElementById("dynamicEmployeeBody").appendChild(form1);
+		form1.appendChild(i3);
+		form1.appendChild(i4);
 	}
 }
 

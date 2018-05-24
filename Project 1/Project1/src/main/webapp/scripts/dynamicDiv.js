@@ -105,6 +105,19 @@ function createUserPageBody(res) {
 	f5.appendChild(i5);
 	form.appendChild(f5);
 	
+	let fp = document.createElement("div");
+	fp.setAttribute("class", "form-group");
+	let lp = document.createElement("label");
+	lp.innerHTML = "Password:"
+	let ip = document.createElement("input");
+	ip.setAttribute("name", "new_password");
+	ip.setAttribute("class", "form-control");
+	ip.setAttribute("type", "password");
+	
+	fp.appendChild(lp);
+	fp.appendChild(ip);
+	form.appendChild(fp);
+	
 	let button = document.createElement("button");
 	button.setAttribute("type", "submit");
 	button.setAttribute("class", "btn btn-info");
@@ -323,12 +336,14 @@ function goToNewReimbursementSubmission() {
 	form1.setAttribute("enctype", "multipart/form-data");
 	let i3 = document.createElement("input");
 	i3.setAttribute("type", "file");
-	i3.setAttribute("name", "photo");
 	i3.setAttribute("size", "50");
+	i3.setAttribute("name", "photo");
+	let iph = document.createElement("input");
+	iph.setAttribute("type", "text");
+	iph.setAttribute("name", "reId");
 	let i4 = document.createElement("input");
 	i4.setAttribute("type", "submit");
 	i3.setAttribute("submit", "Save");
-	
 	
 	document.getElementById("dynamicEmployeeBody").appendChild(form);
 	form.appendChild(fieldset);
@@ -338,6 +353,7 @@ function goToNewReimbursementSubmission() {
 	form.appendChild(i2);
 	
 	document.getElementById("dynamicEmployeeBody").appendChild(form1);
+	form1.appendChild(iph);
 	form1.appendChild(i3);
 	form1.appendChild(i4);
 }

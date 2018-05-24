@@ -59,8 +59,6 @@
     <url-pattern>/master</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>Upload</display-name>
     <servlet-name>Upload</servlet-name>
     <servlet-class>servlet.UploadServlet</servlet-class>
   </servlet>
@@ -69,13 +67,19 @@
     <url-pattern>/upload</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>UploadFileServlet</display-name>
     <servlet-name>UploadFileServlet</servlet-name>
     <servlet-class>servlet.UploadFileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UploadFileServlet</servlet-name>
     <url-pattern>/uploadfile</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DownloadFileServlet</servlet-name>
+    <servlet-class>servlet.DownloadFileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DownloadFileServlet</servlet-name>
+    <url-pattern>/downloadfile</url-pattern>
   </servlet-mapping>
 </web-app>
