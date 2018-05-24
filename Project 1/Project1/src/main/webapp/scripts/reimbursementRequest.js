@@ -18,12 +18,19 @@ function getReimbursementsEmployee(setup, param) {
 			getEmployeeReimbursements, param);
 }
 
+function getReimbursementsEmployeeManager(setup, param) {
+	employeeReimburses = setup;
+	console.log(employeeReimburses + ' finalize');
+	sendAjaxPost("http://localhost:8085/Project1/master",
+			getEmployeeReimbursementsManager, param);
+}
+
 function getReimbursementsSingleEmployee(setup, param) {
 	employeeReimburses = setup;
 	console.log(employeeReimburses + ' finalized');
 	console.log(document.getElementById("mySearch").value);
 	sendAjaxPostUsername("http://localhost:8085/Project1/master",
-			getEmployeeReimbursements, param, document
+			getEmployeeReimbursementsManager, param, document
 					.getElementById("mySearch").value);
 }
 
@@ -34,6 +41,16 @@ function getEmployeeReimbursements(xhr) {
 		let res = JSON.parse(xhr.responseText);
 		console.log(res);
 		showReimbursements(res, y);
+	}
+}
+
+function getEmployeeReimbursementsManager(xhr) {
+	if (xhr.responseText) {
+		let y = employeeReimburses;
+		console.log(xhr.responseText);
+		let res = JSON.parse(xhr.responseText);
+		console.log(res);
+		showReimbursementsManager(res, y);
 	}
 }
 
@@ -84,11 +101,62 @@ function showReimbursements(res, x) {
 	}
 }
 
+function showReimbursementsManager(res, x) {
+	var table = document.getElementById("dynamicEmployeeBody");
+	
+	while (table.firstChild) {
+		table.removeChild(table.firstChild);
+	}
+	createReimburseHeader();
+	createReimburseTable();
+	console.log(res);
+	for ( var i in res) {
+		if (res[i].pendingState === x || x == 3) {
+			var trm = document.createElement("tr");
+			trm.setAttribute('onclick', "getSingleReimbursementManager(this.firstChild.innerHTML)");
+			var td1 = document.createElement("td");
+			var td2 = document.createElement("td");
+			var td3 = document.createElement("td");
+			var td4 = document.createElement("td");
+			var td5 = document.createElement("td");
+			var td6 = document.createElement("td");
+			var txt1 = document.createTextNode(res[i].reId);
 
+			var txt2 = document.createTextNode("$" + res[i].expenses);
+			var txt3 = document.createTextNode(pendingStateShow(res[i].pendingState));
+			var txt4 = document.createTextNode(res[i].managerView);
+			var txt5 = document.createTextNode("Needs Date");
+			var txt6 = document.createTextNode("Needs Date");
+
+			td1.appendChild(txt1);
+			td2.appendChild(txt2);
+			td3.appendChild(txt3);
+			td4.appendChild(txt4);
+			td5.appendChild(txt5);
+			td6.appendChild(txt6);
+			
+			trm.appendChild(td1);
+			trm.appendChild(td2);
+			trm.appendChild(td3);
+			trm.appendChild(td4);
+			trm.appendChild(td5);
+			trm.appendChild(td6);
+			var section = document.getElementById("targettable");
+			section.appendChild(trm);
+		}
+	}
+}
 function getSingleReimbursement(x) {
 	var employeeReimburses = 3;
 	console.log("testing1");
 	sendAjaxPostReil("http://localhost:8085/Project1/master", getReimbursementPage, "singleReimbursementById", x);
+	console.log("testingFinal");
+}
+
+function getSingleReimbursementManager(x) {
+	var employeeReimburses = 3;
+	console.log("testing1");
+	sendAjaxPostReil("http://localhost:8085/Project1/master", getReimbursementPageManager, "singleReimbursementById", x);
 	console.log("testingFinal");
 }
 
@@ -149,6 +217,52 @@ function getReimbursementPage(xhr) {
 		var section = document.getElementById("targettable");
 		section.appendChild(trm);
 		
+		//reinsert insertResolutionBox() here if necessary
+	}
+}
+
+function getReimbursementPageManager(xhr) {
+	if (xhr.responseText) {
+		console.log(xhr.responseText);
+		let res = JSON.parse(xhr.responseText);
+		console.log(res);
+		deleteDiv();
+		createReimburseHeader();
+		createReimburseTable();
+		var trm = document.createElement("tr");
+		var td1 = document.createElement("td");
+		td1.setAttribute("id", "retrieve")
+		var td2 = document.createElement("td");
+		var td3 = document.createElement("td");
+		var td4 = document.createElement("td");
+		var td5 = document.createElement("td");
+		var td6 = document.createElement("td");
+		var txt1 = document.createTextNode(res.reId);
+
+		var txt2 = document.createTextNode("$" + res.expenses);
+		var txt3 = document.createTextNode(pendingStateShow(res.pendingState));
+		var txt4 = document.createTextNode(res.managerView);
+		var txt5 = document.createTextNode("Needs Date");
+		var txt6 = document.createTextNode("Needs Date");
+
+		td1.appendChild(txt1);
+		td2.appendChild(txt2);
+		td3.appendChild(txt3);
+		td4.appendChild(txt4);
+		td5.appendChild(txt5);
+		td6.appendChild(txt6);
+		
+		trm.appendChild(td1);
+		trm.appendChild(td2);
+		trm.appendChild(td3);
+		trm.appendChild(td4);
+		trm.appendChild(td5);
+		trm.appendChild(td6);
+		
+		var section = document.getElementById("targettable");
+		section.appendChild(trm);
+		
+		//reinsert insertResolutionBox() here if necessary
 		let l1 = document.createElement("label");
 		l1.setAttribute("class", "containerp");
 		l1.innerHTML = "None";
@@ -185,8 +299,6 @@ function getReimbursementPage(xhr) {
 		button.setAttribute("class", "btn btn-info");
 		button.innerHTML = "Update";
 		
-		
-		
 		document.getElementById("dynamicEmployeeBody").appendChild(l1);
 		l1.appendChild(i1);
 		l1.appendChild(s1);
@@ -199,6 +311,8 @@ function getReimbursementPage(xhr) {
 		document.getElementById("dynamicEmployeeBody").appendChild(button);
 	}
 }
+
+
 
 
 function checkResolution() {
