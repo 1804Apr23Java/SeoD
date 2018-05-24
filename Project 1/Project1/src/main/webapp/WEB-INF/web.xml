@@ -58,4 +58,24 @@
     <servlet-name>Master</servlet-name>
     <url-pattern>/master</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Upload</display-name>
+    <servlet-name>Upload</servlet-name>
+    <servlet-class>servlet.UploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Upload</servlet-name>
+    <url-pattern>/upload</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UploadFileServlet</display-name>
+    <servlet-name>UploadFileServlet</servlet-name>
+    <servlet-class>servlet.UploadFileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadFileServlet</servlet-name>
+    <url-pattern>/uploadfile</url-pattern>
+  </servlet-mapping>
 </web-app>

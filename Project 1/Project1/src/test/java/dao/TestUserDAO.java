@@ -29,7 +29,7 @@ public class TestUserDAO {
     @Test
     public void testgetUserInfo() {
     	User test = new User("test_username", "password", "firstName", "lastname", "test@mail", 0);
-    	User realUser = userTest.getUserInfo("test_username")
+    	User realUser = userTest.getUserInfo("test_username");
     	assertTrue(test.equals(realUser));
     }
     

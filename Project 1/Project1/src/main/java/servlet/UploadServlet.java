@@ -1,35 +1,31 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import dao.ReimburseDAO;
 import dao.ReimburseIMPL;
 import dao.UserDAO;
 import dao.UserIMPL;
-import domain.Reimburse;
-import domain.User;
 
 
-public class ManagerPageServlet extends HttpServlet {
+public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public ManagerPageServlet() {
+    public UploadServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("views/manager.html").forward(request,response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 
@@ -37,13 +33,10 @@ public class ManagerPageServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		response.setContentType("text/html");
 		String username = (String) session.getAttribute("username");
-		int permissions = (int) session.getAttribute("permissions");
-		UserDAO ud = new UserIMPL();
-		List<User> listUsers = ud.getAllUsers();
-		response.setContentType("application/json");
-		ObjectMapper om = new ObjectMapper();
-		String listUString = om.writeValueAsString(listUsers);
-		response.getWriter().write(listUString);
+		double registered_expenses = Double.parseDouble(request.getParameter("expenses"));
+		ReimburseDAO rd = new ReimburseIMPL();
+		rd.insertNewReimbursement(username, registered_expenses);
+		response.sendRedirect("employee");
 	}
 
 }

@@ -2,11 +2,9 @@ package dao;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
 
 import org.junit.Test;
 
-import domain.Reimburse;
 
 public class TestReimburseDAO {
 
@@ -27,11 +25,11 @@ public class TestReimburseDAO {
 	
 	@Test
 	public void testInsertNewReimbursement() {
-		assertTrue(reimburseTest.insertNewReimbursement("tony", 105.00, "image.ref"));
+		assertTrue(reimburseTest.insertNewReimbursement("tony", 105.00));
 	}
 	
 	public void testGetReimursementByUserAccount() {
-		assertNotNull(reimburseTest.getReimursementByUserAccount("tony"));
+		assertNotNull(reimburseTest.getReimbursementByUserAccount("tony"));
 	}
 
 	public void testGetAllReimbursements() {
@@ -39,7 +37,7 @@ public class TestReimburseDAO {
 	}
 
 	public void testGetAllCertainReimursement() {
-		assertNotNull(reimburseTest.getAllCertainReimursement(2));
+		assertNotNull(reimburseTest.getAllCertainReimbursement(2));
 	}
 
 	public void testChangePendingState() {

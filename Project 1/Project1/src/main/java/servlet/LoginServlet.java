@@ -40,18 +40,17 @@ public class LoginServlet extends HttpServlet {
 		//authenticate user
 		UserDAO ud = new UserIMPL();
 		int userCheck = ud.checkLoginInfo(username, password);
+		session.setAttribute("username", username);
+		session.setAttribute("permissions", userCheck);
 
 		if(userCheck == 1) 
 		{
-			session.setAttribute("username", username);
-			session.setAttribute("permissions", userCheck);
 			session.setAttribute("problem", null);
 			response.sendRedirect("employee");
 		}
 		else if (userCheck == 2)
 		{
-			session.setAttribute("username", username);
-			session.setAttribute("permissions", userCheck);
+			
 			session.setAttribute("problem", null);
 			response.sendRedirect("manager");
 		}

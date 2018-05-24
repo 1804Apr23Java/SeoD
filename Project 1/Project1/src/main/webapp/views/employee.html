@@ -4,48 +4,68 @@
 <meta charset="ISO-8859-1">
 <title>Employee Profile</title>
 <link rel="stylesheet" href="styles/Framework.css">
+<link rel="stylesheet" href="styles/bootstrap.css">
+<link rel="stylesheet" href="styles/basic.css">
+<link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
-	<div>
-	
+	<nav>
+		<div class="header-container">
+			<h1>hello</h1>
+			<div class="user-box"></div>
+		</div>
+
+		<div class="navbar1">
+			<a onclick="deleteDiv()">Home </a> <a onclick="getUserInfo('employeeInfo')">Personal
+				Info</a>
+			<div class="dropdown1">
+				<button class="dropbtn1">
+					Reimbursements <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content1">
+					<a onclick="getReimbursementsEmployee(3, 'employeeAll')">All
+						your reimbursements</a> <a
+						onclick="getReimbursementsEmployee(0, 'employeePending')">Your
+						pending reimbursements</a> <a
+						onclick="getReimbursementsEmployee(1, 'employeeRejected')">Your
+						rejected reimbursements</a> <a
+						onclick="getReimbursementsEmployee(2, 'employeeResolved')">Your
+						resolved reimbursements</a> <a
+						onclick="goToNewReimbursementSubmission()">Submit new
+						reimbursement</a>
+				</div>
+			</div>
+			<a href="logout">Logout</a>
+		</div>
+	</nav>
+
+	<!-- Dynamic body, do not touch! -->
+	<div id="page-wrapper">
+		<div id="page-inner">
+			<div id="dynamicEmployeeBody">
+				<form action="/action_page.php">
+					<select name="cars">
+						<option value="volvo">Volvo</option>
+						<option value="saab">Saab</option>
+						<option value="fiat" selected>Fiat</option>
+						<option value="audi">Audi</option>
+					</select> <br>
+					<br> <input type="submit">
+				</form>
+			</div>
+		</div>
 	</div>
 
-	<div class="box">
-		<p id="user"></p>
-	</div>
-	<div id="dynamicEmployeeBody">Reimbursements: </div>
-	<button type="button" onclick="getUserInfo('employeeInfo')">Profile</button>
-	<button type="button" onclick="getReimbursementsEmployee(3, 'employeeAll')">All Reimbursements</button>
-	<button type="button" onclick="getReimbursementsEmployee(0, 'employeePending')">Pending Reimbursements</button>
-	<button type="button" onclick="getReimbursementsEmployee(1, 'employeeRejected')">Rejected Reimbursements</button>
-	<button type="button" onclick="getReimbursementsEmployee(2, 'employeeResolved')">Resolved Reimbursements</button>
-	<p id="showReimbursements">Hello</p>
 
-	<a href="logout">Logout</a>
-	
-	<form class="box" action="employeeinfo" method="post"> <!--onclick="updateUserInfo('employeeUpdate')"  -->
-		<fieldset>
-			<legend>First Name:</legend>
-			<input name="first_name">
-		</fieldset>
-		<fieldset>
-			<legend>Last Name:</legend>
-			<input name="last_name">
-		</fieldset>
-		<fieldset>
-			<legend>Email:</legend>
-			<input name="new_email">
-		</fieldset>
-		
-		<br>
-		<input type="submit" value="login"> <!--onclick="updateUserInfo('employeeUpdate')"  -->
-	</form>
 
-	
+
+
+
 </body>
 <script src="scripts/ajax.js"></script>
 <script src="scripts/check.js"></script>
+<script src="scripts/dynamicDiv.js"></script>
 <script src="scripts/reimbursementRequest.js"></script>
 <script src="scripts/userinfo.js"></script>
 </html>

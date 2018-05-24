@@ -3,31 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="styles/Framework.css">
+<link rel="stylesheet" href="styles/bootstrap.css">
+<link rel="stylesheet" href="styles/basic.css">
+<link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-	<p> All hail our glorious Manager! </p>
+	<nav>
+		<div class="header-container">
+			<div class="user-box">hiefwafejwifwaeiofjewifjewfoijwaifo</div>
+		</div>
 
-	<div>
-	
+		<div class="navbar1">
+			<a onclick="deleteDiv()">Home</a> <a onclick="getUserInfo('employeeInfo')">Personal
+				Info</a> <a onclick="getUsersInfo('managerViewAllEmployee')">Employee
+				Info</a>
+			<div class="dropdown1">
+				<button class="dropbtn1">
+					Reimbursements <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content1">
+					<a
+						onclick="getReimbursementsEmployee(3, 'managerViewAllReimbursements')">All
+						Employee reimbursements</a> <a
+						onclick="getReimbursementsEmployee(0, 'managerViewAllReimbursements')">All
+						pending reimbursements</a> <a
+						onclick="getReimbursementsEmployee(1, 'managerViewAllReimbursements')">All
+						rejected reimbursements</a> <a
+						onclick="getReimbursementsEmployee(2, 'managerViewAllReimbursements')">All
+						resolved reimbursements</a> <a
+						onclick="goToReimburseSearch()" >Reimbursements by Username</a>
+						
+				</div>
+			</div>
+			<a href="logout">Logout</a>
+		</div>
+	</nav>
+
+	<div id="page-wrapper">
+		<div id="page-inner">
+			<div id="dynamicEmployeeBody"></div>
+		</div>
 	</div>
 
-	<div class="box">
-		<p id="user"></p>
-	</div>
-	<div id="dynamicEmployeeBody">Reimbursements: </div>
-	<button type="button" onclick="getUsersInfo('managerViewAllEmployee')">Profile</button>
-	<button type="button" onclick="getReimbursementsEmployee(3, 'managerViewAllReimbursements')">Get All Employee Reimbursements</button>
-	<button type="button" onclick="getReimbursementsEmployee(0, 'managerViewAllReimbursements')">Get All Pending Reimbursements</button>
-	<button type="button" onclick="getReimbursementsEmployee(1, 'managerViewAllReimbursements')">Get All Rejected Reimbursements</button>
-	<button type="button" onclick="getReimbursementsEmployee(2, 'managerViewAllReimbursements')">Get All Resolved Reimbursements</button>
-	<p id="managerReimbursements">Hello</p>
 
-	<a href="logout">Logout</a>
 
-	
+
+
+
 </body>
 <script src="scripts/ajax.js"></script>
 <script src="scripts/check.js"></script>
+<script src="scripts/dynamicDiv.js"></script>
 <script src="scripts/reimbursementRequest.js"></script>
 <script src="scripts/userinfo.js"></script>
 </html>

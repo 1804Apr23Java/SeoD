@@ -15,11 +15,11 @@ public class Reimburse {
 		this.managerView = managerView;
 	}
 	
-	public Reimburse(int reId, int userId, float expenses, int pendingState, String managerView) {
+	public Reimburse(int reId, int userId, Float expenses, int pending, String managerView) {
 		this.reId = reId;
 		this.userId = userId;
 		this.expenses = expenses;
-		this.pendingState = pendingState;
+		this.pendingState = pending;
 		this.managerView = managerView;
 	}
 	

@@ -15,18 +15,17 @@ import util.ConnectionUtil;
 
 public class ReimburseIMPL implements ReimburseDAO {
 
-	public boolean insertNewReimbursement(String username, double expenses, String image_ref) {
+	public boolean insertNewReimbursement(String username, double expenses) {
 		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
 			UserDAO ud = new UserIMPL();
 			User getId = ud.getUserInfo(username);
 			int user_id = getId.getUser_id();
-			
+
 			String sql = "INSERT INTO REIMBURSE (USER_ID, EXPENSES) VALUES (?, ?)";
 
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setInt(1, user_id);
 			statement.setDouble(2, expenses);
-			//statement.setString(3, image_ref); <-implement it later for images
 			statement.executeQuery();
 
 			con.close();
@@ -40,8 +39,8 @@ public class ReimburseIMPL implements ReimburseDAO {
 	}
 
 	public List<Reimburse> getAllReimbursements() {
-PreparedStatement pstmt = null;
-		
+		PreparedStatement pstmt = null;
+
 		List<Reimburse> al = new ArrayList<>();
 
 		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
@@ -49,13 +48,13 @@ PreparedStatement pstmt = null;
 			String sql = "SELECT * FROM REIMBURSE";
 			pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			// move through result set
 			while (rs.next()) {
 				int id = rs.getInt("REIMBURSE_ID");
 				int uid = rs.getInt("User_ID");
 				float expense = rs.getFloat("EXPENSES");
-				int pending  = rs.getInt("PENDING_STATE");
+				int pending = rs.getInt("PENDING_STATE");
 				String manager = rs.getString("MANAGER_VIEW");
 				al.add(new Reimburse(id, uid, expense, pending, manager));
 			}
@@ -69,9 +68,9 @@ PreparedStatement pstmt = null;
 		return al;
 	}
 
-	public List<Reimburse> getReimursementByUserAccount(String username) {
+	public List<Reimburse> getReimbursementByUserAccount(String username) {
 		PreparedStatement pstmt = null;
-		
+
 		List<Reimburse> al = new ArrayList<>();
 
 		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
@@ -80,13 +79,13 @@ PreparedStatement pstmt = null;
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, username);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			// move through result set
 			while (rs.next()) {
 				int id = rs.getInt("REIMBURSE_ID");
 				int uid = rs.getInt("User_ID");
 				float expense = rs.getFloat("EXPENSES");
-				int pending  = rs.getInt("PENDING_STATE");
+				int pending = rs.getInt("PENDING_STATE");
 				String manager = rs.getString("MANAGER_VIEW");
 				al.add(new Reimburse(id, uid, expense, pending, manager));
 			}
@@ -100,10 +99,38 @@ PreparedStatement pstmt = null;
 		return al;
 	}
 
-	public List<Reimburse> getAllCertainReimursement(int pendingState) {
+	public Reimburse getReimburseById(int reid) {
 		
 		PreparedStatement pstmt = null;
 		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+
+			String sql = "SELECT * FROM REIMBURSE WHERE REIMBURSE_ID = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, reid);
+			ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			int userId = rs.getInt("USER_ID");
+			Float expenses = rs.getFloat("EXPENSES");
+			int pending = rs.getInt("PENDING_STATE");
+			String manager = rs.getString("MANAGER_VIEW");
+			return new Reimburse(reid, userId, expenses, pending, manager);
+			
+		}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<Reimburse> getAllCertainReimbursement(int pendingState) {
+
+		PreparedStatement pstmt = null;
+
 		List<Reimburse> al = new ArrayList<>();
 
 		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
@@ -112,13 +139,13 @@ PreparedStatement pstmt = null;
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, pendingState);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			// move through result set
 			while (rs.next()) {
 				int id = rs.getInt("REIMBURSE_ID");
 				int uid = rs.getInt("User_ID");
 				float expense = rs.getFloat("EXPENSES");
-				int pending  = rs.getInt("PENDING_STATE");
+				int pending = rs.getInt("PENDING_STATE");
 				String manager = rs.getString("MANAGER_VIEW");
 				al.add(new Reimburse(id, uid, expense, pending, manager));
 			}
@@ -131,8 +158,6 @@ PreparedStatement pstmt = null;
 
 		return al;
 	}
-
-
 
 	public int changePendingState(int reimburse_id, String managerUsername, int newState) {
 		CallableStatement cs = null;
