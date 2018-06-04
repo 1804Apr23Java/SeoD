@@ -1,0 +1,21 @@
+server:
+  port: 8090
+  
+endpoints:
+  beans:
+    sensitive: false
+  mappings:
+    sensitive: false
+
+spring:
+  application:
+    name: code-challenge-6
+  datasource:
+    platform: oracle
+    url: jdbc:oracle:thin:@revaturedatabase5562.ctlwui5soyig.us-east-2.rds.amazonaws.com
+    username: DSeo5562
+    password: 1911Lotus
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    database: ORACLE
+    show-sql: true
